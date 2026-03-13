@@ -4,20 +4,13 @@
 
 Este repositório contém um notebook responsável pela **extração,
 organização e análise exploratória inicial de um dataset de captura de
-movimento (motion capture)**.
+movimento**.
 
 Os dados representam **posições tridimensionais de marcadores
-corporais** obtidos por sistemas como **Vicon**, amplamente utilizados
-em:
-
--   Biomecânica
--   Reabilitação
--   Análise de movimento humano
--   Pesquisa médica e esportiva
+corporais** obtidos por sistemas como **Vicon**.
 
 O objetivo principal do código é **preparar o dataset para análises
-posteriores**, incluindo modelagem de machine learning ou estudos
-biomecânicos.
+posteriores**.
 
 ------------------------------------------------------------------------
 
@@ -250,17 +243,5 @@ Após todas as etapas, o dataset possui:
 O dataset final está pronto para:
 
 -   análise biomecânica
--   treinamento de modelos de machine learning
 -   pipelines de processamento de dados
 -   análise estatística avançada
-
-------------------------------------------------------------------------
-
-# Público-Alvo
-
-Este material foi desenvolvido para **estagiários e novos membros da
-equipe**, com o objetivo de:
-
--   facilitar a compreensão do pipeline
--   padronizar o entendimento do dataset
--   servir como referência técnica do projeto
