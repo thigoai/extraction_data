@@ -1,4 +1,4 @@
-# Documentação Técnica --- Pipeline de Extração e Análise de Dados
+# Documentação Técnica - Pipeline de Extração e Análise de Dados
 
 ## Visão Geral
 
