@@ -1,247 +1,107 @@
-# Documentação Técnica - Pipeline de Extração e Análise de Dados
-
-## Visão Geral
-
-Este repositório contém um notebook responsável pela **extração,
-organização e análise exploratória inicial de um dataset de captura de
-movimento**.
-
-Os dados representam **posições tridimensionais de marcadores
-corporais** obtidos por sistemas como **Vicon**.
-
-O objetivo principal do código é **preparar o dataset para análises
-posteriores**.
-
-------------------------------------------------------------------------
-
-# Estrutura do Pipeline
-
-O notebook executa as seguintes etapas:
-
-1.  Carregamento do dataset
-2.  Padronização inicial das colunas
-3.  Inspeção inicial dos dados
-4.  Análise exploratória (EDA)
-5.  Visualização de sinais temporais
-6.  Estatísticas descritivas
-7.  Estruturação de marcadores tridimensionais
-8.  Análise de dados faltantes
-9.  Cálculo de amplitude de movimento
-10. Análise de correlação entre marcadores
-11. Renomeação semântica dos marcadores
-12. Tradução dos marcadores para português
-
-------------------------------------------------------------------------
-
-# 1. Carregamento do Dataset
-
-O dataset é carregado utilizando a biblioteca **kagglehub**, que permite
-acessar datasets hospedados no Kaggle diretamente via código.
-
-## Bibliotecas utilizadas
-
--   `kagglehub` --- acesso ao dataset
--   `pandas` --- manipulação de dados
--   `numpy` --- operações numéricas
--   `matplotlib` / `seaborn` --- visualização de dados
--   `missingno` --- análise de valores ausentes
-
-Os dados são carregados e armazenados em um **DataFrame do pandas**,
-chamado:
-
-    df
-
-------------------------------------------------------------------------
-
-# 2. Padronização Inicial das Colunas
-
-Inicialmente, as colunas são renomeadas utilizando um padrão genérico:
-
-    feat_0
-    feat_1
-    feat_2
-    ...
-
-Essa estratégia é utilizada quando o dataset não possui nomes
-estruturados ou quando é necessário realizar uma organização inicial
-antes da definição da semântica real das variáveis.
-
-------------------------------------------------------------------------
-
-# 3. Inspeção Inicial dos Dados
-
-Após o carregamento, são realizadas verificações básicas:
-
--   Dimensão do dataset (linhas e colunas)
--   Visualização das primeiras linhas (`head()`)
--   Contagem de valores nulos
-
-Essas verificações são fundamentais para **validar a integridade dos
-dados** antes de iniciar qualquer análise.
-
-------------------------------------------------------------------------
-
-# 4. Visualização do Sinal Temporal
-
-O código gera **gráficos das primeiras features do dataset**.
-
-Cada coluna representa uma variável ao longo do tempo (frames da
-captura).
-
-Esses gráficos ajudam a identificar:
-
--   padrões de movimento
--   ruídos nos sinais
--   possíveis falhas de captura
-
-### Estrutura do gráfico
-
-Eixo X → Frames (tempo)\
-Eixo Y → Valor da feature (posição do marcador)
-
-------------------------------------------------------------------------
-
-# 5. Estatísticas Descritivas
-
-O método:
-
-    df.describe()
-
-é utilizado para calcular estatísticas fundamentais:
-
--   média
--   desvio padrão
--   valor mínimo
--   valor máximo
--   quartis
-
-Essa etapa permite compreender **a distribuição dos dados** e detectar
-possíveis **outliers**.
-
-------------------------------------------------------------------------
-
-# 6. Estruturação dos Marcadores (Markers)
-
-Os dados representam **marcadores corporais em três dimensões**.
-
-Cada marcador possui:
-
--   coordenada **X**
--   coordenada **Y**
--   coordenada **Z**
-
-A estrutura utilizada segue o padrão:
-
-    M1_x
-    M1_y
-    M1_z
-
-    M2_x
-    M2_y
-    M2_z
-
-Isso permite identificar facilmente **qual coordenada pertence a cada
-marcador**.
-
-------------------------------------------------------------------------
-
-# 7. Análise de Dados Faltantes
-
-A biblioteca **missingno** é utilizada para gerar um mapa visual de
-valores ausentes.
-
-Esse gráfico permite identificar:
-
--   colunas com perda de dados
--   padrões de ausência
--   possíveis problemas na captura de movimento
-
-Esse tipo de análise é extremamente importante em **datasets
-biomecânicos**.
-
-------------------------------------------------------------------------
-
-# 8. Cálculo da Amplitude de Movimento
-
-Para cada variável é calculada a **amplitude de movimento**, definida
-como:
-
-    amplitude = valor_maximo - valor_minimo
-
-Essa métrica indica **quanto cada marcador se movimenta ao longo do
-tempo**.
-
-Marcadores com maior amplitude normalmente representam **segmentos
-corporais com maior deslocamento**.
-
-------------------------------------------------------------------------
-
-# 9. Análise de Correlação entre Marcadores
-
-O notebook também gera **matrizes de correlação** entre subconjuntos de
-marcadores.
-
-Isso permite identificar:
-
--   dependência entre movimentos
--   sincronia entre segmentos corporais
--   padrões biomecânicos
-
-Essa análise é útil para **modelagem e redução de dimensionalidade**.
-
-------------------------------------------------------------------------
-
-# 10. Renomeação Semântica dos Marcadores
-
-Após a análise inicial, as colunas são renomeadas utilizando a
-nomenclatura padrão do protocolo **Vicon**.
-
-Exemplos:
-
-  Código   Significado
-  -------- ------------------
-  LFHD     Left Front Head
-  RFHD     Right Front Head
-  LKNE     Left Knee
-  RANK     Right Ankle
-
-Cada marcador continua com suas três coordenadas:
-
-    _x
-    _y
-    _z
-
-------------------------------------------------------------------------
-
-# 11. Tradução dos Marcadores para Português
-
-Para facilitar o entendimento da equipe, os marcadores também recebem
-**nomes descritivos em português**.
-
-Exemplos:
-
-  Código   Nome traduzido
-  -------- --------------------
-  LFHD     Cabeca_Frontal_Esq
-  RSHO     Ombro_Dir
-  LKNE     Joelho_Esq
-  LANK     Tornozelo_Esq
-
-Essa etapa melhora a **legibilidade do dataset**.
-
-------------------------------------------------------------------------
-
-# Resultado Final
-
-Após todas as etapas, o dataset possui:
-
--   colunas semanticamente estruturadas
--   marcadores organizados por coordenada
--   análise exploratória inicial realizada
--   verificação de qualidade dos dados
-
-O dataset final está pronto para:
-
--   análise biomecânica
--   pipelines de processamento de dados
--   análise estatística avançada
+Pipeline de extração do dataset **UI-PRMD** (University of Idaho – Physical Rehabilitation Movement Data) para treinar modelos de detecção de anomalias de postura.
+ 
+> Referência: Vakanski et al., *"A Data Set of Human Body Movements for Physical Rehabilitation Exercises"*, Data (Basel), 2018. [PMC5773117](https://pmc.ncbi.nlm.nih.gov/articles/PMC5773117/)
+
+> Dataset: https://opendatalab.com/OpenDataLab/UI-PRMD
+ 
+---
+ 
+## Estrutura esperada dos arquivos de entrada
+ 
+```
+data/
+├── correct/
+│   ├── m01_s01_e01_angles.txt
+│   ├── m01_s01_e02_angles.txt
+│   └── ...
+└── incorrect/
+    ├── m01_s01_e01_angles_inc.txt
+    ├── m01_s01_e02_angles_inc.txt
+    └── ...
+```
+ 
+### Convenção de nomes
+ 
+```
+m{movimento}_s{sujeito}_e{execução}_angles.txt       → label 0 (correto)
+m{movimento}_s{sujeito}_e{execução}_angles_inc.txt   → label 1 (incorreto)
+```
+ 
+O dataset contém **10 movimentos**, **10 sujeitos** e **10 execuções** por combinação, totalizando até 2000 arquivos (corretos + incorretos).
+ 
+---
+ 
+## Formato dos arquivos `.txt`
+ 
+- Separador: vírgula
+- Sem cabeçalho
+- Cada linha = 1 frame de tempo (capturado a 100 Hz pelo sistema Vicon)
+- Cada arquivo tem **168 frames** em média (varia por execução)
+- **117 colunas** = 39 juntas × 3 eixos
+ 
+| Eixo | Plano anatômico |
+|------|----------------|
+| X | Flexão / Extensão |
+| Y | Abdução / Adução |
+| Z | Rotação Interna / Externa |
+ 
+---
+ 
+## Ordem das 39 juntas (Vicon Angles — Tabela 2 do artigo)
+ 
+| # | Nome | # | Nome |
+|---|------|---|------|
+| 1 | Head *(absoluto)* | 21 | Right_tibia |
+| 2 | Left_head | 22 | Left_ankle |
+| 3 | Right_head | 23 | Right_ankle |
+| 4 | Left_neck | 24 | Left_foot |
+| 5 | Right_neck | 25 | Right_foot |
+| 6 | Left_clavicle | 26 | Left_toe |
+| 7 | Right_clavicle | 27 | Right_toe |
+| 8 | Thorax *(absoluto)* | 28 | Left_shoulder |
+| 9 | Left_thorax | 29 | Right_shoulder |
+| 10 | Right_thorax | 30 | Left_elbow |
+| 11 | Pelvis *(absoluto)* | 31 | Right_elbow |
+| 12 | Left_pelvis | 32 | Left_radius |
+| 13 | Right_pelvis | 33 | Right_radius |
+| 14 | Left_hip | 34 | Left_wrist |
+| 15 | Right_hip | 35 | Right_wrist |
+| 16 | Left_femur | 36 | Left_upperhand |
+| 17 | Right_femur | 37 | Right_upperhand |
+| 18 | Left_knee | 38 | Left_hand |
+| 19 | Right_knee | 39 | Right_hand |
+| 20 | Left_tibia | | |
+ 
+> Juntas marcadas como *absoluto* têm coordenadas em relação ao sistema de referência do sensor. As demais são relativas à junta pai no modelo esquelético.
+ 
+Para acessar a junta de índice `i` (base 0):
+```python
+col_X = i * 3
+col_Y = i * 3 + 1
+col_Z = i * 3 + 2
+```
+ 
+---
+ 
+## Notebook disponível
+ 
+### `data_extraction_csv.ipynb`
+Lê todos os arquivos `.txt` e gera um CSV consolidado.
+ 
+**Saída — `output/dataset.csv`:**
+ 
+| Coluna | Descrição |
+|--------|-----------|
+| `movement` | Número do movimento (1–10) |
+| `subject` | Número do sujeito (1–10) |
+| `execution` | Número da execução (1–10) |
+| `label` | 0 = correto, 1 = incorreto |
+| `frame` | Índice do frame dentro do arquivo |
+| `Head_X` … `Right_hand_Z` | 117 ângulos em graus (°) |
+ 
+**Como rodar:**
+1. Defina `CORRECT_DIR` e `INCORRECT_DIR` na célula de configuração
+2. Execute todas as células em ordem
+3. O CSV é escrito
+ 
+---
